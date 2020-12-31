@@ -36,8 +36,7 @@ def chemin(dest):
 				if listeDest[x] == dest:
 					with open('%s.dot' % did, 'a') as schema:
                 				schema.write("\"")
-						schema.write(nomType + nom )
-						schema.write(" :")
+						schema.write(nomType " :" + nom )
                                 		schema.write("\" -- \"")
 						schema.write(str(listeDest[x+1]))
                                 		schema.write("\"")
