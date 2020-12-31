@@ -27,7 +27,7 @@ def chemin(dest):
 			listeDest.append(dest)
 			with open('%s.dot' % did, 'a') as schema:
                 		schema.write("\"")
-				schema.write("Annonce :")
+				schema.write("Annonce : ")
 				schema.write(str(nom))
                 		schema.write("\" -- ")
 			chemin(dest)
@@ -55,7 +55,7 @@ def chemin(dest):
 			listeDest.append(dest)
 			with open('%s.dot' % did, 'a') as schema:
                                 schema.write("\"")
-				schema.write("Queue :")
+				schema.write("Queue : ")
 				schema.write(str(nom))
                                 schema.write("\" -- ")
 			chemin(dest)
@@ -64,7 +64,9 @@ def chemin(dest):
                                 if listeDest[x] == dest:
 					with open('%s.dot' % did, 'a') as schema:
                                 		schema.write("\"")
-						schema.write(str(nomType) + str(nom))
+						schema.write(str(nomType))
+						schema.write(": ")
+						schema.write(str(nom))
 #                                		schema.write("\" -- \"")
 #                                		schema.write(listeDest[x+1])
                                 		schema.write("\"")
@@ -74,7 +76,7 @@ def chemin(dest):
 		nom = mycursor.fetchone()[0]
 		with open('%s.dot' % did, 'a') as schema:
                                 schema.write("\"")
-				schema.write("Extension ")
+				schema.write("Extension : ")
 				schema.write(str(nom))
                                 schema.write("\"")
 		print ("Fin")
@@ -111,7 +113,7 @@ def chemin(dest):
 		dest = mycursor.fetchone()[0]
 		with open('%s.dot' % did, 'a') as schema:
                                 schema.write("\"")
-				schema.write("Trunk :")
+				schema.write("Trunk : ")
 				schema.write(str(dest))
                                 schema.write("\"")
                 print dest
@@ -120,7 +122,7 @@ def chemin(dest):
                 dest = mycursor.fetchone()[0]
 		with open('%s.dot' % did, 'a') as schema:
                                 schema.write("\"")
-				schema.write("DISA :")
+				schema.write("DISA : ")
 				schema.write(str(dest))
                                 schema.write("\"")
                 print dest
@@ -137,7 +139,7 @@ def chemin(dest):
 		for i in range(len(listeIVR)):
 			with open('%s.dot' % did, 'a') as schema:
                                 schema.write("\"")
-				schema.write("IVR :")
+				schema.write("IVR : ")
 				schema.write(str(nom))
                                 schema.write("\" -- ")
         		chemin(listeIVR[i])
@@ -153,7 +155,7 @@ def chemin(dest):
 			listeDest.append(dest)
 			with open('%s.dot' % did, 'a') as schema:
                                 schema.write("\"")
-				schema.write("NM :")
+				schema.write("NM : ")
 				schema.write(str(nom))
                                 schema.write("\" -- ")
                         chemin(dest)
@@ -176,7 +178,7 @@ def chemin(dest):
 			listeDest.append(dest)
 			with open('%s.dot' % did, 'a') as schema:
                                 schema.write(" \"")
-				schema.write("NM :")
+				schema.write("NM : ")
 				schema.write(str(nom))
                                 schema.write("\" -- ")
                         chemin(dest)
@@ -204,7 +206,7 @@ def chemin(dest):
 			listeDest.append(dest)
 			with open('%s.dot' % did, 'a') as schema:
                                 schema.write("\"")
-				schema.write("TC :")
+				schema.write("TC : ")
 				schema.write(str(nom))
                                 schema.write("\" -- ")
                         chemin(dest)
@@ -227,7 +229,7 @@ def chemin(dest):
 			listeDest.append(dest)
                         with open('%s.dot' % did, 'a') as schema:
                                 schema.write(" \"")
-				schema.write("TC :")
+				schema.write("TC : ")
 				schema.write(str(nom))
                                 schema.write("\" -- ")
 			chemin(dest)
