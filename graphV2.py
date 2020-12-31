@@ -36,9 +36,11 @@ def chemin(dest):
 				if listeDest[x] == dest:
 					with open('%s.dot' % did, 'a') as schema:
                 				schema.write("\"")
-						schema.write(nomType " :" + nom )
-                                		schema.write("\" -- \"")
-						schema.write(str(listeDest[x+1]))
+						schema.write(str(nomType))
+                                                schema.write(": ")
+                                                schema.write(str(nom))
+#                                		schema.write("\" -- \"")
+#						schema.write(str(listeDest[x+1]))
                                 		schema.write("\"")
 			print ("BOUCLE")
 	elif name == 'queue':
@@ -53,7 +55,7 @@ def chemin(dest):
 			listeDest.append(dest)
 			with open('%s.dot' % did, 'a') as schema:
                                 schema.write("\"")
-				schema.write("Queue ")
+				schema.write("Queue :")
 				schema.write(str(nom))
                                 schema.write("\" -- ")
 			chemin(dest)
@@ -88,7 +90,7 @@ def chemin(dest):
 			listeDest.append(dest)
                         with open('%s.dot' % did, 'a') as schema:
                                 schema.write("\"")
-				schema.write("RG ")
+				schema.write("RG :")
 				schema.write(str(nom))
                                 schema.write("\" -- ")
 			chemin(dest)
@@ -97,9 +99,11 @@ def chemin(dest):
                                 if listeDest[x] == dest:
 		                        with open('%s.dot' % did, 'a') as schema:
                 		                schema.write("\"")
-						schema.write(str(nomType) + str(nom))
-                                		schema.write("\" -- \"")
-                                		schema.write(str(listeDest[x+1]))
+						schema.write(str(nomType))
+						schema.write(": ")
+						schema.write(str(nom))
+#                                		schema.write("\" -- \"")
+#                                		schema.write(str(listeDest[x+1]))
                                 		schema.write("\"")
                 	print ("BOUCLE")
 	elif name == 'trunk':
@@ -107,7 +111,7 @@ def chemin(dest):
 		dest = mycursor.fetchone()[0]
 		with open('%s.dot' % did, 'a') as schema:
                                 schema.write("\"")
-				schema.write("Trunk ")
+				schema.write("Trunk :")
 				schema.write(str(dest))
                                 schema.write("\"")
                 print dest
@@ -116,7 +120,7 @@ def chemin(dest):
                 dest = mycursor.fetchone()[0]
 		with open('%s.dot' % did, 'a') as schema:
                                 schema.write("\"")
-				schema.write("DISA ")
+				schema.write("DISA :")
 				schema.write(str(dest))
                                 schema.write("\"")
                 print dest
@@ -133,7 +137,7 @@ def chemin(dest):
 		for i in range(len(listeIVR)):
 			with open('%s.dot' % did, 'a') as schema:
                                 schema.write("\"")
-				schema.write("IVR ")
+				schema.write("IVR :")
 				schema.write(str(nom))
                                 schema.write("\" -- ")
         		chemin(listeIVR[i])
@@ -149,7 +153,7 @@ def chemin(dest):
 			listeDest.append(dest)
 			with open('%s.dot' % did, 'a') as schema:
                                 schema.write("\"")
-				schema.write("NM ")
+				schema.write("NM :")
 				schema.write(str(nom))
                                 schema.write("\" -- ")
                         chemin(dest)
@@ -158,9 +162,11 @@ def chemin(dest):
                                 if listeDest[x] == dest:
 					with open('%s.dot' % did, 'a') as schema:
               		                	schema.write("\"")
-						schema.write(str(nomType) + str(nom))
-                                		schema.write("\" -- \"")
-                                		schema.write(str(listeDest[x+1]))
+						schema.write(str(nomType))
+                                		schema.write(": ")
+						schema.write(str(nom))
+#						schema.write("\" -- \"")
+#                                		schema.write(str(listeDest[x+1]))
                                 		schema.write("\"")
                 	print ("BOUCLE")
 		mycursor.execute("select disabled_destination_id from ombu_nightmodes where nightmode_id=%s", (ind,))
@@ -170,7 +176,7 @@ def chemin(dest):
 			listeDest.append(dest)
 			with open('%s.dot' % did, 'a') as schema:
                                 schema.write(" \"")
-				schema.write("NM ")
+				schema.write("NM :")
 				schema.write(str(nom))
                                 schema.write("\" -- ")
                         chemin(dest)
@@ -179,9 +185,11 @@ def chemin(dest):
                                 if listeDest[x] == dest:
 					with open('%s.dot' % did, 'a') as schema:
                 		                schema.write("\"")
-						schema.write(str(nomType) + str(nom))
-                        		        schema.write("\" -- \"")
-                        		        schema.write(str(listeDest[x+1]))
+						schema.write(str(nomType))
+						schema.write(": ")
+						schema.write(str(nom))
+#                        		        schema.write("\" -- \"")
+#                        		        schema.write(str(listeDest[x+1]))
                         		        schema.write("\"")
                         print ("BOUCLE")
 	elif name == 'time_condition':
@@ -196,7 +204,7 @@ def chemin(dest):
 			listeDest.append(dest)
 			with open('%s.dot' % did, 'a') as schema:
                                 schema.write("\"")
-				schema.write("TC ")
+				schema.write("TC :")
 				schema.write(str(nom))
                                 schema.write("\" -- ")
                         chemin(dest)
@@ -205,9 +213,11 @@ def chemin(dest):
                                 if listeDest[x] == dest:
 					with open('%s.dot' % did, 'a') as schema:
                 		                schema.write("\"")
-						schema.write(str(nomType) + str(nom))
-                		                schema.write("\" -- \"")
-                       			        schema.write(str(listeDest[x+1]))
+						schema.write(str(nomType))
+						schema.write(": ")
+						schema.write(str(nom))
+#                		                schema.write("\" -- \"")
+#                      			        schema.write(str(listeDest[x+1]))
                                 		schema.write("\"")
                         print ("BOUCLE")
 		mycursor.execute("select mismatch_destination_id from ombu_time_conditions where time_condition_id=%s", (ind,))
@@ -217,7 +227,7 @@ def chemin(dest):
 			listeDest.append(dest)
                         with open('%s.dot' % did, 'a') as schema:
                                 schema.write(" \"")
-				schema.write("TC ")
+				schema.write("TC :")
 				schema.write(str(nom))
                                 schema.write("\" -- ")
 			chemin(dest)
@@ -226,14 +236,16 @@ def chemin(dest):
                                 if listeDest[x] == dest:
 					with open('%s.dot' %did, 'a') as schema:
                 		                schema.write("\"")
-						schema.write(str(nomType) + str(nom))
-                		                schema.write("\" -- \"")
-                		                schema.write(str(listeDest[x+1]))
+						schema.write(str(nomType))
+						schema.write(": ")
+						schema.write(str(nom))
+#                		                schema.write("\" -- \"")
+#                		                schema.write(str(listeDest[x+1]))
                 		                schema.write("\"")
                         print ("BOUCLE")
 	elif name == 'terminate_call':
 		with open('%s.dot' % did, 'a') as schema:
-                                schema.write("\"Terminate ")
+                                schema.write("\"Terminate : ")
 				schema.write(str(did))
 				schema.write("\"")
 		print("Fin")
