@@ -38,3 +38,16 @@ else
 	echo "Connecteur Python-Mysql present"
 	echo ""
 fi
+
+if [ -z "$(ls /bin | grep graphviz)" ] 
+then
+	echo ""
+	echo "Installation de Graphviz"
+	echo ""
+	yum -y install graphviz
+	echo ""
+else
+	echo ""
+        echo "Graphviz present"
+	echo ""
+fi
