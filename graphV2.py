@@ -307,4 +307,5 @@ for i in range(len(liste1)):
 	print (listeDest)
 	with open('%s.dot' % did, 'a') as schema:
                 schema.write("\n;}\n")
+	os.system("dot -Tpdf $(did).dot -o $(did).pdf")
 	listeDest = []
