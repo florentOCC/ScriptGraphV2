@@ -39,7 +39,7 @@ else
 	echo ""
 fi
 
-if [ -z "$(ls /bin | grep graphviz)" ] 
+if [ -z "$(ls /bin | grep ^dot$)" ] 
 then
 	echo ""
 	echo "Installation de Graphviz"
@@ -51,3 +51,7 @@ else
         echo "Graphviz present"
 	echo ""
 fi
+
+mkdir /usr/share/ombutel/www/graph
+mv index.php /usr/share/ombutel/www/graph/index.php
+
