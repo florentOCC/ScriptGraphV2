@@ -307,5 +307,11 @@ for i in range(len(liste1)):
 	print (listeDest)
 	with open('%s.dot' % did, 'a') as schema:
                 schema.write("\n;}\n")
-	os.system("dot -Tpdf $(did).dot -o $(did).pdf")
+	os.system("dot -Tpdf '{0}'.dot -o '{0}'.pdf".format(did))
+	fileName = r"/usr/share/ombutel/www/graph"
+	if os.path.exists(fileName):
+		print("ok")
+	else:
+		os.system("mkdir /usr/share/ombutel/www/graph")
+	os.system("mv '{0}'.pdf /usr/share/ombutel/www/graph/'{0}'.pdf ".format(did))
 	listeDest = []
