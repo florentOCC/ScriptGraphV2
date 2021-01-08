@@ -287,7 +287,8 @@ def chemin(dest):
                                         schema.write(str(time))
                                         schema.write(" ")
                                         schema.write("\n")
-	                                schema.write("\" -- ")
+			with open('%s.dot' % did, 'a') as schema:
+				schema.write("\" -- ")
                         chemin(dest)
 		else :
 			for x in range(len(listeDest)):
