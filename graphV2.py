@@ -215,7 +215,7 @@ def chemin(dest):
 				with open('%s.dot' % did, 'a') as schema:
 					schema.write("[color=green] ")
 			with open('%s.dot' % did, 'a') as schema:
-				schema.write("edge [color=red]")
+				schema.write("edge [color=green]")
 				schema.write("\"")
                                 schema.write("NM : ")
                                 schema.write(str(nom))
@@ -244,7 +244,16 @@ def chemin(dest):
 				schema.write("NM : ")
 				schema.write(str(nom))
 				schema.write("\"")
-				schema.write("edge [color=green]")
+			mycursor.execute("select state from ombu_nightmodes where nightmode_id=%s", (ind,))
+                        etat = mycursor.fetchone()[0]
+                        if etat == "no" :
+                                with open('%s.dot' % did, 'a') as schema:
+                                        schema.write("[color=red] ")
+                        else :
+                                with open('%s.dot' % did, 'a') as schema:
+                                        schema.write("[color=green] ")
+                        with open('%s.dot' % did, 'a') as schema:
+				schema.write("edge [color=red]")
 				schema.write(" \"")
                                 schema.write("NM : ")
                                 schema.write(str(nom))
@@ -285,7 +294,23 @@ def chemin(dest):
 				time = i
                                 with open('%s.dot' % did, 'a') as schema:
                                         schema.write(str(time))
-                                        schema.write(" ")
+                                        schema.write("\n")
+			with open('%s.dot' % did, 'a') as schema:
+                                schema.write("\"")
+				schema.write("edge [color=green]")
+			with open('%s.dot' % did, 'a') as schema:
+                                schema.write("\"")
+                                schema.write("TC : ")
+                                schema.write(str(nom))
+                                schema.write("\n")
+                        mycursor.execute("select time_group_id from ombu_time_conditions where time_condition_id=%s", (ind,))
+                        timegroup = mycursor.fetchone()[0]
+                        mycursor.execute("select time from ombu_time_groups_schedules where time_group_id=%s", (timegroup,))
+                        cursor = mycursor
+                        for i in cursor:
+                                time = i
+                                with open('%s.dot' % did, 'a') as schema:
+                                        schema.write(str(time))
                                         schema.write("\n")
 			with open('%s.dot' % did, 'a') as schema:
 				schema.write("\" -- ")
@@ -320,9 +345,26 @@ def chemin(dest):
                                 time = i
                                 with open('%s.dot' % did, 'a') as schema:
                                         schema.write(str(time))
-                                        schema.write(" ")
                                         schema.write("\n")
-	                                schema.write("\" -- ")
+			with open('%s.dot' % did, 'a') as schema:
+                                schema.write("\"")
+                                schema.write("edge [color=red]")
+                        with open('%s.dot' % did, 'a') as schema:
+                                schema.write("\"")
+                                schema.write("TC : ")
+                                schema.write(str(nom))
+                                schema.write("\n")
+                        mycursor.execute("select time_group_id from ombu_time_conditions where time_condition_id=%s", (ind,))
+                        timegroup = mycursor.fetchone()[0]
+                        mycursor.execute("select time from ombu_time_groups_schedules where time_group_id=%s", (timegroup,))
+                        cursor = mycursor
+                        for i in cursor:
+                                time = i
+                                with open('%s.dot' % did, 'a') as schema:
+                                        schema.write(str(time))
+                                        schema.write("\n")
+			with open('%s.dot' % did, 'a') as schema:
+                                schema.write("\" -- ")
 			chemin(dest)
 		else :
 			for x in range(len(listeDest)):
