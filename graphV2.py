@@ -1,9 +1,12 @@
 import os
 import subprocess
 import mysql.connector
+testivr = -1
 
 def chemin(dest):
 #	print dest
+	global testivr
+#	print str(testivr)
 	mycursor.execute("select category_id from ombu_destinations where destination_id=%s", (dest,))
 	category = mycursor.fetchone()[0]
 	mycursor.execute("select `index` from ombu_destinations where destination_id=%s", (dest,))
@@ -30,6 +33,13 @@ def chemin(dest):
 				schema.write("Annonce : ")
 				schema.write(str(nom))
 				schema.write("\"")
+			if str(testivr) > "-1":
+                                with open('%s.dot' % did, 'a') as schema:
+                                        schema.write("[label = \"")
+                                        schema.write(str(testivr))
+                                        schema.write("\"]")
+                                testivr = -1
+			with open('%s.dot' % did, 'a') as schema:
 				schema.write("edge [color=black]")
 				schema.write("\"")
                                 schema.write("Annonce : ")
@@ -40,6 +50,18 @@ def chemin(dest):
 			for x in range(len(listeDest)):
 				if listeDest[x] == dest:
 					with open('%s.dot' % did, 'a') as schema:
+                		                schema.write("\"")
+		                                schema.write("Annonce : ")
+                        		        schema.write(str(nom))
+                        		        schema.write("\"")
+                        	if str(testivr) > "-1":
+                                	with open('%s.dot' % did, 'a') as schema:
+                                        	schema.write("[label = \"")
+                                        	schema.write(str(testivr))
+                                        	schema.write("\"]")
+                                	testivr = -1
+					with open('%s.dot' % did, 'a') as schema:
+						schema.write("edge [color=black]")
                 				schema.write("\"")
 						schema.write(str(nomType))
                                                 schema.write(": ")
@@ -67,6 +89,7 @@ def chemin(dest):
 			cursor = mycursor
 #			print ("indice")
 #			print ind
+			del liste3[:]
 			for i in cursor:
 				extension = i[0]
 				liste3.append(extension)
@@ -81,6 +104,40 @@ def chemin(dest):
 				if (i+1)%5 == 0:
 					with open('%s.dot' % did, 'a') as schema:
                                         	schema.write("\n")
+			with open('%s.dot' % did, 'a') as schema:
+                                schema.write("\"")
+			if str(testivr) > "-1":
+                                with open('%s.dot' % did, 'a') as schema:
+                                        schema.write("[label = \"")
+                                        schema.write(str(testivr))
+                                        schema.write("\"]")
+                                testivr = -1
+			with open('%s.dot' % did, 'a') as schema:
+                                schema.write("edge [color=black]")
+                                schema.write("\"")
+                        with open('%s.dot' % did, 'a') as schema:
+                                schema.write("Queue : ")
+                                schema.write(str(nom))
+                                schema.write("\n")
+                        mycursor.execute("select extension_id from ombu_queue_members where queue_id=%s", (ind,))
+                        cursor = mycursor
+#                       print ("indice")
+#                       print ind
+                        del liste3[:]
+                        for i in cursor:
+                                extension = i[0]
+                                liste3.append(extension)
+#                               print liste3
+                        for i in range (len(liste3)):
+                                mycursor.execute("select extension from ombu_extensions where extension_id=%s", (liste3[i],))
+                                extension = mycursor.fetchone()[0]
+#                               print extension
+                                with open('%s.dot' % did, 'a') as schema:
+                                        schema.write(str(extension))
+                                        schema.write(" ")
+                                if (i+1)%5 == 0:
+                                        with open('%s.dot' % did, 'a') as schema:
+                                                schema.write("\n")
 			with open('%s.dot' % did, 'a') as schema:	
 				schema.write("\" -- ")
 			chemin(dest)
@@ -92,18 +149,54 @@ def chemin(dest):
 						schema.write(str(nomType))
 						schema.write(": ")
 						schema.write(str(nom))
-#                                		schema.write("\" -- \"")
-#                                		schema.write(listeDest[x+1])
-                                		schema.write("\"")
+						schema.write("\n")
+					mycursor.execute("select extension_id from ombu_queue_members where queue_id=%s", (ind,))
+                        		cursor = mycursor
+#                      			print ("indice")
+#                       		print ind
+					del liste3[:]
+                        		for i in cursor:
+                                		extension = i[0]
+                                		liste3.append(extension)
+#                               		print liste3
+                        		for i in range (len(liste3)):
+                                		mycursor.execute("select extension from ombu_extensions where extension_id=%s", (liste3[i],))
+                                		extension = mycursor.fetchone()[0]
+#                               		print extension
+                                		with open('%s.dot' % did, 'a') as schema:
+                                        		schema.write(str(extension))
+                                        		schema.write(" ")
+                                		if (i+1)%5 == 0:
+                                        		with open('%s.dot' % did, 'a') as schema:
+                                                		schema.write("\n")
+#                                				schema.write("\" -- \"")
+#                                				schema.write(listeDest[x+1])
+					with open('%s.dot' % did, 'a') as schema:
+                             			schema.write("\"")
+					if str(testivr) > "-1":
+                                		with open('%s.dot' % did, 'a') as schema:
+                                        		schema.write("[label = \"")
+                                        		schema.write(str(testivr))
+                                        		schema.write("\"]")
+							schema.write("edge [color=black]")
+                                	testivr = -1
+					
 #                       	print ("BOUCLE")
 	elif name == 'extension':
 		mycursor.execute("select extension from ombu_extensions where extension_id=%s", (ind,))
 		nom = mycursor.fetchone()[0]
 		with open('%s.dot' % did, 'a') as schema:
-                                schema.write("\"")
-				schema.write("Extension : ")
-				schema.write(str(nom))
-                                schema.write("\"")
+                	schema.write("\"")
+			schema.write("Extension : ")
+			schema.write(str(nom))
+                        schema.write("\"")
+		if str(testivr) > "-1":
+                                with open('%s.dot' % did, 'a') as schema:
+                                        schema.write("[label = \"")
+                                        schema.write(str(testivr))
+                                        schema.write("\"]")
+                                testivr = -1
+			
 #		print ("Fin")
 	elif name == 'ringgroup':
 		mycursor.execute("select destination_id from ombu_ring_groups where ring_group_id=%s", (ind,))
@@ -138,6 +231,39 @@ def chemin(dest):
                                 if (i+1)%5 == 0:
                                         with open('%s.dot' % did, 'a') as schema:
                                                 schema.write("\n")
+			with open('%s.dot' % did, 'a') as schema:
+                                        schema.write("\"")
+			if str(testivr) > "-1":
+                                with open('%s.dot' % did, 'a') as schema:
+                                        schema.write("[label = \"")
+                                        schema.write(str(testivr))
+                                        schema.write("\"]")
+                                testivr = -1
+			with open('%s.dot' % did, 'a') as schema:
+                                        schema.write("edge [color=black]")
+			with open('%s.dot' % did, 'a') as schema:
+                                schema.write("\"")
+                                schema.write("RG :")
+                                schema.write(str(nom))
+                                schema.write("\n")
+                        mycursor.execute("select extension_id from ombu_ring_group_members where ring_group_id=%s", (ind,))
+                        cursor = mycursor
+#                       print ("indice")
+#                       print ind
+                        for i in cursor:
+                                extension = i[0]
+                                liste3.append(extension)
+#                                print liste3
+                        for i in range (len(liste3)):
+                                mycursor.execute("select extension from ombu_extensions where extension_id=%s", (liste3[i],))
+                                extension = mycursor.fetchone()[0]
+#                               print extension
+                                with open('%s.dot' % did, 'a') as schema:
+                                        schema.write(str(extension))
+                                        schema.write(" ")
+                                if (i+1)%5 == 0:
+                                        with open('%s.dot' % did, 'a') as schema:
+                                                schema.write("\n")
                         with open('%s.dot' % did, 'a') as schema:
                                 schema.write("\" -- ")
 			chemin(dest)
@@ -151,16 +277,52 @@ def chemin(dest):
 						schema.write(str(nom))
 #                                		schema.write("\" -- \"")
 #                                		schema.write(str(listeDest[x+1]))
-                                		schema.write("\"")
+					mycursor.execute("select extension_id from ombu_ring_group_members where ring_group_id=%s", (ind,))
+                       	 		cursor = mycursor
+#                       		print ("indice")
+#                       		print ind
+                        		for i in cursor:
+                                		extension = i[0]
+                                		liste3.append(extension)
+#                               		print liste3
+                        		for i in range (len(liste3)):
+                                		mycursor.execute("select extension from ombu_extensions where extension_id=%s", (liste3[i],))
+                                		extension = mycursor.fetchone()[0]
+#                               		print extension
+                                		with open('%s.dot' % did, 'a') as schema:
+                                        		schema.write(str(extension))
+                                        		schema.write(" ")
+                                		if (i+1)%5 == 0:
+                                        		with open('%s.dot' % did, 'a') as schema:
+                                                		schema.write("\n")
+                                	with open('%s.dot' % did, 'a') as schema:	
+						schema.write("\"")
+					if str(testivr) > "-1":
+                                		with open('%s.dot' % did, 'a') as schema:
+                                        		schema.write("[label = \"")
+                                        		schema.write(str(testivr))
+                                        		schema.write("\"]")
+                                		testivr = -1
+                        		with open('%s.dot' % did, 'a') as schema:
+                                        	schema.write("edge [color=black]")
 #                	print ("BOUCLE")
 	elif name == 'trunk':
 		mycursor.execute("select description from ombu_trunks where trunk_id=%s", (ind,))
 		dest = mycursor.fetchone()[0]
 		with open('%s.dot' % did, 'a') as schema:
-                                schema.write("\"")
-				schema.write("Trunk : ")
-				schema.write(str(dest))
-                                schema.write("\"")
+                	schema.write("\"")
+			schema.write("Trunk : ")
+			schema.write(str(dest))
+                        schema.write("\"")
+		if str(testivr) > "-1":
+                	with open('%s.dot' % did, 'a') as schema:
+                        	schema.write("[label = \"")
+                                schema.write(str(testivr))
+                                schema.write("\"]")
+			testivr = -1
+		with open('%s.dot' % did, 'a') as schema:
+                        schema.write("edge [color=black]")
+			
 #                print dest
 	elif name == 'disa':
 		mycursor.execute("select description from ombu_disa where disa_id=%s", (ind,))
@@ -170,6 +332,14 @@ def chemin(dest):
 				schema.write("DISA : ")
 				schema.write(str(dest))
                                 schema.write("\"")
+		if str(testivr) > "-1":
+                        with open('%s.dot' % did, 'a') as schema:
+                                schema.write("[label = \"")
+                                schema.write(str(testivr))
+                                schema.write("\"]")
+                        testivr = -1
+                with open('%s.dot' % did, 'a') as schema:
+                        schema.write("edge [color=black]")
 #                print dest
 	elif name == 'ivr':
 		mycursor.execute("select description from ombu_ivrs where ivr_id=%s", (ind,))
@@ -182,10 +352,24 @@ def chemin(dest):
 #                	print dest
 			listeIVR.append(dest)
 		for i in range(len(listeIVR)):
+			mycursor.execute("select ivr_entry_id from ombu_ivr_entries where ivr_id=%s and destination_id=%s", (ind,listeIVR[i],))
+			testivr = mycursor.fetchone()[0]
 			with open('%s.dot' % did, 'a') as schema:
                                 schema.write("\"")
 				schema.write("IVR : ")
 				schema.write(str(nom))
+				schema.write("\"")
+			#if str(testivr) > "-1":
+                        #	with open('%s.dot' % did, 'a') as schema:
+                        #        	schema.write("[label = \"")
+                        #        	schema.write(str(testivr))
+                        #        	schema.write("\"]")
+                        #	testivr = -1
+                	#with open('%s.dot' % did, 'a') as schema:
+                        	schema.write("edge [color=black]")
+                                schema.write("\"")
+                                schema.write("IVR : ")
+                                schema.write(str(nom))
                                 schema.write("\" -- ")
         		chemin(listeIVR[i])
 	elif name == 'nightmode':
@@ -202,7 +386,15 @@ def chemin(dest):
                                 schema.write("\"")
 				schema.write("NM : ")
 				schema.write(str(nom))
-				schema.write("\" \"")
+				schema.write("\"")
+			if str(testivr) > "-1":
+				with open('%s.dot' % did, 'a') as schema:
+                                	schema.write("[label = \"")
+					schema.write(str(testivr))
+					schema.write("\"]")
+				testivr = -1
+			with open('%s.dot' % did, 'a') as schema:
+				schema.write("\"")
 				schema.write("NM : ")
                                 schema.write(str(nom))
 				schema.write("\"")
@@ -233,6 +425,13 @@ def chemin(dest):
 #						schema.write("\" -- \"")
 #                                		schema.write(str(listeDest[x+1]))
                                 		schema.write("\"")
+					if str(testivr) > "-1":
+                                		with open('%s.dot' % did, 'a') as schema:
+                                        		schema.write("[label = \"")
+                                        		schema.write(str(testivr))
+                                        		schema.write("\"]")
+                                		testivr = -1
+				
 #                	print ("BOUCLE")
 		mycursor.execute("select disabled_destination_id from ombu_nightmodes where nightmode_id=%s", (ind,))
                 dest = mycursor.fetchone()[0]
@@ -272,6 +471,7 @@ def chemin(dest):
                         		        schema.write("\"")
 #                        print ("BOUCLE")
 	elif name == 'time_condition':
+		listetime = [1]
 		mycursor.execute("select match_destination_id from ombu_time_conditions where time_condition_id=%s", (ind,))
                 dest = mycursor.fetchone()[0]
 		mycursor.execute("select description from ombu_time_conditions where time_condition_id=%s", (ind,))
@@ -291,14 +491,20 @@ def chemin(dest):
                         mycursor.execute("select time from ombu_time_groups_schedules where time_group_id=%s", (timegroup,))
 			cursor = mycursor
 			for i in cursor:
-				time = i
+				listetime[0] = i
                                 with open('%s.dot' % did, 'a') as schema:
-                                        schema.write(str(time))
+                                        schema.write(str(listetime[0]))
                                         schema.write("\n")
 			with open('%s.dot' % did, 'a') as schema:
                                 schema.write("\"")
-				schema.write("edge [color=green]")
+			if str(testivr) > "-1":
+	                        with open('%s.dot' % did, 'a') as schema:
+        	                        schema.write("[label = \"")
+                	                schema.write(str(testivr))
+                        	        schema.write("\"]")
+                        	testivr = -1
 			with open('%s.dot' % did, 'a') as schema:
+				schema.write("edge [color=green]")
                                 schema.write("\"")
                                 schema.write("TC : ")
                                 schema.write(str(nom))
@@ -308,9 +514,9 @@ def chemin(dest):
                         mycursor.execute("select time from ombu_time_groups_schedules where time_group_id=%s", (timegroup,))
                         cursor = mycursor
                         for i in cursor:
-                                time = i
+                                listetime[0] = i
                                 with open('%s.dot' % did, 'a') as schema:
-                                        schema.write(str(time))
+                                        schema.write(str(listetime[0]))
                                         schema.write("\n")
 			with open('%s.dot' % did, 'a') as schema:
 				schema.write("\" -- ")
@@ -342,14 +548,20 @@ def chemin(dest):
                         mycursor.execute("select time from ombu_time_groups_schedules where time_group_id=%s", (timegroup,))
                         cursor = mycursor
                         for i in cursor:
-                                time = i
+                                listetime[0] = i
                                 with open('%s.dot' % did, 'a') as schema:
-                                        schema.write(str(time))
+                                        schema.write(str(listetime[0]))
                                         schema.write("\n")
 			with open('%s.dot' % did, 'a') as schema:
                                 schema.write("\"")
+			if str(testivr) > "-1":
+                                with open('%s.dot' % did, 'a') as schema:
+                                        schema.write("[label = \"")
+                                        schema.write(str(testivr))
+                                        schema.write("\"]")
+                                testivr = -1
+			with open('%s.dot' % did, 'a') as schema:
                                 schema.write("edge [color=red]")
-                        with open('%s.dot' % did, 'a') as schema:
                                 schema.write("\"")
                                 schema.write("TC : ")
                                 schema.write(str(nom))
@@ -359,9 +571,9 @@ def chemin(dest):
                         mycursor.execute("select time from ombu_time_groups_schedules where time_group_id=%s", (timegroup,))
                         cursor = mycursor
                         for i in cursor:
-                                time = i
+                                listetime[0] = i
                                 with open('%s.dot' % did, 'a') as schema:
-                                        schema.write(str(time))
+                                        schema.write(str(listetime[0]))
                                         schema.write("\n")
 			with open('%s.dot' % did, 'a') as schema:
                                 schema.write("\" -- ")
@@ -380,9 +592,16 @@ def chemin(dest):
 #                        print ("BOUCLE")
 	elif name == 'terminate_call':
 		with open('%s.dot' % did, 'a') as schema:
-                                schema.write("\"Terminate : ")
-				schema.write(str(did))
-				schema.write("\"")
+                        schema.write("\"Terminate : ")
+			schema.write(str(did))
+			schema.write("\"")
+		if str(testivr) > "-1":
+                                with open('%s.dot' % did, 'a') as schema:
+                                        schema.write("[label = \"")
+                                        schema.write(str(testivr))
+                                        schema.write("\"]")
+                                testivr = -1
+		with open('%s.dot' % did, 'a') as schema:
 				schema.write("edge [color=black]")
 #		print("Fin")
 #	else:
