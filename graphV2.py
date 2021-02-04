@@ -6,7 +6,7 @@ testivr = -1
 def chemin(dest):
 #	print dest
 	global testivr
-#	print str(testivr)
+	print str(testivr)
 	mycursor.execute("select category_id from ombu_destinations where destination_id=%s", (dest,))
 	category = mycursor.fetchone()[0]
 	mycursor.execute("select `index` from ombu_destinations where destination_id=%s", (dest,))
@@ -353,19 +353,19 @@ def chemin(dest):
 			listeIVR.append(dest)
 		for i in range(len(listeIVR)):
 			mycursor.execute("select ivr_entry_id from ombu_ivr_entries where ivr_id=%s and destination_id=%s", (ind,listeIVR[i],))
-			testivr = mycursor.fetchone()[0]
 			with open('%s.dot' % did, 'a') as schema:
                                 schema.write("\"")
 				schema.write("IVR : ")
 				schema.write(str(nom))
 				schema.write("\"")
-			#if str(testivr) > "-1":
-                        #	with open('%s.dot' % did, 'a') as schema:
-                        #        	schema.write("[label = \"")
-                        #        	schema.write(str(testivr))
-                        #        	schema.write("\"]")
-                        #	testivr = -1
-                	#with open('%s.dot' % did, 'a') as schema:
+			if str(testivr) > "-1":
+                        	with open('%s.dot' % did, 'a') as schema:
+                                	schema.write("[label = \"")
+                                	schema.write(str(testivr))
+                                	schema.write("\"]")
+                        	testivr = -1
+			testivr = mycursor.fetchone()[0]
+                	with open('%s.dot' % did, 'a') as schema:
                         	schema.write("edge [color=black]")
                                 schema.write("\"")
                                 schema.write("IVR : ")
