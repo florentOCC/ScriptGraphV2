@@ -6,7 +6,7 @@ testivr = -1
 def chemin(dest):
 #	print dest
 	global testivr
-	print str(testivr)
+#	print str(testivr)
 	mycursor.execute("select category_id from ombu_destinations where destination_id=%s", (dest,))
 	category = mycursor.fetchone()[0]
 	mycursor.execute("select `index` from ombu_destinations where destination_id=%s", (dest,))
