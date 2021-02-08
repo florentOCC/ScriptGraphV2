@@ -1,12 +1,15 @@
 #!/usr/bin/env python
+# encoding: utf-8
 
+import codecs
 import os
 import subprocess
 import mysql.connector
 testivr = -1
 
+
 def chemin(dest):
-#	print dest
+	print dest
 	global testivr
 #	print str(testivr)
 	mycursor.execute("select category_id from ombu_destinations where destination_id=%s", (dest,))
@@ -30,13 +33,13 @@ def chemin(dest):
 		listeDest.append(nomType + nom)
 		if dest not in listeDest :
 			listeDest.append(dest)
-			with open('%s.dot' % did, 'a') as schema:
+			with codecs.open('%s.dot' % did, 'a') as schema:
                 		schema.write("\"")
 				schema.write("Annonce : ")
-				schema.write(str(nom))
+				schema.write(str(nom.encode("utf-8")))
 				schema.write("\"")
 			if str(testivr) > "-1":
-                                with open('%s.dot' % did, 'a') as schema:
+                                with codecs.open('%s.dot' % did, 'a') as schema:
                                         schema.write("[label = \"")
                                         schema.write(str(testivr))
                                         schema.write("\"]")
@@ -45,7 +48,7 @@ def chemin(dest):
 				schema.write("edge [color=black]")
 				schema.write("\"")
                                 schema.write("Annonce : ")
-                                schema.write(str(nom))
+                                schema.write(str(nom.encode("utf-8")))
                 		schema.write("\" -- ")
 			chemin(dest)
 		else :
@@ -54,7 +57,7 @@ def chemin(dest):
 					with open('%s.dot' % did, 'a') as schema:
                 		                schema.write("\"")
 		                                schema.write("Annonce : ")
-                        		        schema.write(str(nom))
+                        		        schema.write(str(nom.encode("utf-8")))
                         		        schema.write("\"")
                         	if str(testivr) > "-1":
                                 	with open('%s.dot' % did, 'a') as schema:
@@ -67,7 +70,7 @@ def chemin(dest):
                 				schema.write("\"")
 						schema.write(str(nomType))
                                                 schema.write(": ")
-                                                schema.write(str(nom))
+                                                schema.write(str(nom.encode("utf-8")))
 #                                		schema.write("\" -- \"")
 #						schema.write(str(listeDest[x+1]))
                                 		schema.write("\"")
@@ -85,7 +88,7 @@ def chemin(dest):
 			with open('%s.dot' % did, 'a') as schema:
                                 schema.write("\"")
 				schema.write("Queue : ")
-				schema.write(str(nom))
+				schema.write(str(nom.encode("utf-8")))
 				schema.write("\n")
 			mycursor.execute("select extension_id from ombu_queue_members where queue_id=%s", (ind,))
 			cursor = mycursor
@@ -119,7 +122,7 @@ def chemin(dest):
                                 schema.write("\"")
                         with open('%s.dot' % did, 'a') as schema:
                                 schema.write("Queue : ")
-                                schema.write(str(nom))
+                                schema.write(str(nom.encode("utf-8")))
                                 schema.write("\n")
                         mycursor.execute("select extension_id from ombu_queue_members where queue_id=%s", (ind,))
                         cursor = mycursor
@@ -150,7 +153,7 @@ def chemin(dest):
                                 		schema.write("\"")
 						schema.write(str(nomType))
 						schema.write(": ")
-						schema.write(str(nom))
+						schema.write(str(nom.encode("utf-8")))
 						schema.write("\n")
 					mycursor.execute("select extension_id from ombu_queue_members where queue_id=%s", (ind,))
                         		cursor = mycursor
@@ -190,7 +193,7 @@ def chemin(dest):
 		with open('%s.dot' % did, 'a') as schema:
                 	schema.write("\"")
 			schema.write("Extension : ")
-			schema.write(str(nom))
+			schema.write(str(nom.encode("utf-8")))
                         schema.write("\"")
 		if str(testivr) > "-1":
                                 with open('%s.dot' % did, 'a') as schema:
@@ -213,7 +216,7 @@ def chemin(dest):
                         with open('%s.dot' % did, 'a') as schema:
                                 schema.write("\"")
 				schema.write("RG :")
-				schema.write(str(nom))
+				schema.write(str(nom.encode("utf-8")))
 				schema.write("\n")
                         mycursor.execute("select extension_id from ombu_ring_group_members where ring_group_id=%s", (ind,))
                         cursor = mycursor
@@ -246,7 +249,7 @@ def chemin(dest):
 			with open('%s.dot' % did, 'a') as schema:
                                 schema.write("\"")
                                 schema.write("RG :")
-                                schema.write(str(nom))
+                                schema.write(str(nom.encode("utf-8")))
                                 schema.write("\n")
                         mycursor.execute("select extension_id from ombu_ring_group_members where ring_group_id=%s", (ind,))
                         cursor = mycursor
@@ -276,7 +279,7 @@ def chemin(dest):
                 		                schema.write("\"")
 						schema.write(str(nomType))
 						schema.write(": ")
-						schema.write(str(nom))
+						schema.write(str(nom.encode("utf-8")))
 #                                		schema.write("\" -- \"")
 #                                		schema.write(str(listeDest[x+1]))
 					mycursor.execute("select extension_id from ombu_ring_group_members where ring_group_id=%s", (ind,))
@@ -314,7 +317,7 @@ def chemin(dest):
 		with open('%s.dot' % did, 'a') as schema:
                 	schema.write("\"")
 			schema.write("Trunk : ")
-			schema.write(str(dest))
+			schema.write(str(dest.encode("utf-8")))
                         schema.write("\"")
 		if str(testivr) > "-1":
                 	with open('%s.dot' % did, 'a') as schema:
@@ -332,7 +335,7 @@ def chemin(dest):
 		with open('%s.dot' % did, 'a') as schema:
                                 schema.write("\"")
 				schema.write("DISA : ")
-				schema.write(str(dest))
+				schema.write(str(dest.encode("utf-8")))
                                 schema.write("\"")
 		if str(testivr) > "-1":
                         with open('%s.dot' % did, 'a') as schema:
@@ -358,7 +361,7 @@ def chemin(dest):
 			with open('%s.dot' % did, 'a') as schema:
                                 schema.write("\"")
 				schema.write("IVR : ")
-				schema.write(str(nom))
+				schema.write(str(nom.encode("utf-8")))
 				schema.write("\"")
 			if str(testivr) > "-1":
                         	with open('%s.dot' % did, 'a') as schema:
@@ -371,7 +374,7 @@ def chemin(dest):
                         	schema.write("edge [color=black]")
                                 schema.write("\"")
                                 schema.write("IVR : ")
-                                schema.write(str(nom))
+                                schema.write(str(nom.encode("utf-8")))
                                 schema.write("\" -- ")
         		chemin(listeIVR[i])
 	elif name == 'nightmode':
@@ -387,7 +390,7 @@ def chemin(dest):
 			with open('%s.dot' % did, 'a') as schema:
                                 schema.write("\"")
 				schema.write("NM : ")
-				schema.write(str(nom))
+				schema.write(str(nom.encode("utf-8")))
 				schema.write("\"")
 			if str(testivr) > "-1":
 				with open('%s.dot' % did, 'a') as schema:
@@ -398,7 +401,7 @@ def chemin(dest):
 			with open('%s.dot' % did, 'a') as schema:
 				schema.write("\"")
 				schema.write("NM : ")
-                                schema.write(str(nom))
+                                schema.write(str(nom.encode("utf-8")))
 				schema.write("\"")
 			mycursor.execute("select state from ombu_nightmodes where nightmode_id=%s", (ind,))
 			etat = mycursor.fetchone()[0]
@@ -412,7 +415,7 @@ def chemin(dest):
 				schema.write("edge [color=green]")
 				schema.write("\"")
                                 schema.write("NM : ")
-                                schema.write(str(nom))
+                                schema.write(str(nom.encode("utf-8")))
                                 schema.write("\"")
                                 schema.write(" -- ")
                         chemin(dest)
@@ -423,7 +426,7 @@ def chemin(dest):
               		                	schema.write("\"")
 						schema.write(str(nomType))
                                 		schema.write(": ")
-						schema.write(str(nom))
+						schema.write(str(nom.encode("utf-8")))
 #						schema.write("\" -- \"")
 #                                		schema.write(str(listeDest[x+1]))
                                 		schema.write("\"")
@@ -443,7 +446,7 @@ def chemin(dest):
 			with open('%s.dot' % did, 'a') as schema:
                                 schema.write(" \"")
 				schema.write("NM : ")
-				schema.write(str(nom))
+				schema.write(str(nom.encode("utf-8")))
 				schema.write("\"")
 			mycursor.execute("select state from ombu_nightmodes where nightmode_id=%s", (ind,))
                         etat = mycursor.fetchone()[0]
@@ -457,7 +460,7 @@ def chemin(dest):
 				schema.write("edge [color=red]")
 				schema.write(" \"")
                                 schema.write("NM : ")
-                                schema.write(str(nom))
+                                schema.write(str(nom.encode("utf-8")))
                                 schema.write("\" -- ")
                         chemin(dest)
 		else :
@@ -467,7 +470,7 @@ def chemin(dest):
                 		                schema.write("\"")
 						schema.write(str(nomType))
 						schema.write(": ")
-						schema.write(str(nom))
+						schema.write(str(nom.encode("utf-8")))
 #                        		        schema.write("\" -- \"")
 #                        		        schema.write(str(listeDest[x+1]))
                         		        schema.write("\"")
@@ -486,7 +489,7 @@ def chemin(dest):
 			with open('%s.dot' % did, 'a') as schema:
                                 schema.write("\"")
 				schema.write("TC : ")
-				schema.write(str(nom))
+				schema.write(str(nom.encode("utf-8")))
 				schema.write("\n")
                         mycursor.execute("select time_group_id from ombu_time_conditions where time_condition_id=%s", (ind,))
                         timegroup = mycursor.fetchone()[0]
@@ -509,7 +512,7 @@ def chemin(dest):
 				schema.write("edge [color=green]")
                                 schema.write("\"")
                                 schema.write("TC : ")
-                                schema.write(str(nom))
+                                schema.write(str(nom.encode("utf-8")))
                                 schema.write("\n")
                         mycursor.execute("select time_group_id from ombu_time_conditions where time_condition_id=%s", (ind,))
                         timegroup = mycursor.fetchone()[0]
@@ -530,7 +533,7 @@ def chemin(dest):
                 		                schema.write("\"")
 						schema.write(str(nomType))
 						schema.write(": ")
-						schema.write(str(nom))
+						schema.write(str(nom.encode("utf-8")))
 #                		                schema.write("\" -- \"")
 #                      			        schema.write(str(listeDest[x+1]))
                                 		schema.write("\"")
@@ -543,7 +546,7 @@ def chemin(dest):
                         with open('%s.dot' % did, 'a') as schema:
                                 schema.write(" \"")
 				schema.write("TC : ")
-				schema.write(str(nom))
+				schema.write(str(nom.encode("utf-8")))
 				schema.write("\n")
 			mycursor.execute("select time_group_id from ombu_time_conditions where time_condition_id=%s", (ind,))
                         timegroup = mycursor.fetchone()[0]
@@ -566,7 +569,7 @@ def chemin(dest):
                                 schema.write("edge [color=red]")
                                 schema.write("\"")
                                 schema.write("TC : ")
-                                schema.write(str(nom))
+                                schema.write(str(nom.encode("utf-8")))
                                 schema.write("\n")
                         mycursor.execute("select time_group_id from ombu_time_conditions where time_condition_id=%s", (ind,))
                         timegroup = mycursor.fetchone()[0]
@@ -587,7 +590,7 @@ def chemin(dest):
                 		                schema.write("\"")
 						schema.write(str(nomType))
 						schema.write(": ")
-						schema.write(str(nom))
+						schema.write(str(nom.encode("utf-8")))
 #                		                schema.write("\" -- \"")
 #                		                schema.write(str(listeDest[x+1]))
                 		                schema.write("\"")
