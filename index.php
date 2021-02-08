@@ -1,5 +1,8 @@
 <html>
 <body>
+<form action="script.php">
+	<input type="submit" value="Graph">
+</form>
 <?php
 if ($dir = opendir(".")) {
   while($file = readdir($dir)) {
