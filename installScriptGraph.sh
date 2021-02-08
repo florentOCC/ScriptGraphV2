@@ -54,4 +54,5 @@ fi
 
 mkdir /usr/share/ombutel/www/graph
 mv index.php /usr/share/ombutel/www/graph/index.php
-
+mv script.php /usr/share/ombutel/www/graph/script.php
+echo "apache ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
