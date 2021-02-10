@@ -215,7 +215,7 @@ def chemin(dest):
 			listeDest.append(dest)
                         with open('%s.dot' % did, 'a') as schema:
                                 schema.write("\"")
-				schema.write("RG :")
+				schema.write("RG : ")
 				schema.write(str(nom.encode("utf-8")))
 				schema.write("\n")
                         mycursor.execute("select extension_id from ombu_ring_group_members where ring_group_id=%s", (ind,))
@@ -248,13 +248,14 @@ def chemin(dest):
                                         schema.write("edge [color=black]")
 			with open('%s.dot' % did, 'a') as schema:
                                 schema.write("\"")
-                                schema.write("RG :")
+                                schema.write("RG : ")
                                 schema.write(str(nom.encode("utf-8")))
                                 schema.write("\n")
                         mycursor.execute("select extension_id from ombu_ring_group_members where ring_group_id=%s", (ind,))
                         cursor = mycursor
 #                       print ("indice")
 #                       print ind
+			del liste3[:]
                         for i in cursor:
                                 extension = i[0]
                                 liste3.append(extension)
