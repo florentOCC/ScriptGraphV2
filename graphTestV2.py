@@ -353,31 +353,49 @@ def chemin(dest):
 #                print nom
 		mycursor.execute("select destination_id from ombu_ivr_entries where ivr_id=%s", (ind,))
 		listeIVR = []
-		for x in mycursor: 
-			dest = x[0]
-#                	print dest
-			listeIVR.append(dest)
-		for i in range(len(listeIVR)):
-			mycursor.execute("select ivr_entry_id from ombu_ivr_entries where ivr_id=%s and destination_id=%s", (ind,listeIVR[i],))
-			with open('%s.dot' % did, 'a') as schema:
-                                schema.write("\"")
-				schema.write("IVR : ")
-				schema.write(str(nom.encode("utf-8")))
-				schema.write("\"")
-			if str(testivr) > "-1":
-                        	with open('%s.dot' % did, 'a') as schema:
-                                	schema.write("[label = \"")
-                                	schema.write(str(testivr))
-                                	schema.write("\"]")
-                        	testivr = -1
-			testivr = mycursor.fetchone()[0]
-                	with open('%s.dot' % did, 'a') as schema:
-                        	schema.write("edge [color=black]")
-                                schema.write("\"")
-                                schema.write("IVR : ")
-                                schema.write(str(nom.encode("utf-8")))
-                                schema.write("\" -- ")
-        		chemin(listeIVR[i])
+		if dest not in listeDest :
+			for x in mycursor: 
+				dest = x[0]
+#               	 	print dest
+				listeIVR.append(dest)
+			for i in range(len(listeIVR)):
+				mycursor.execute("select ivr_entry_id from ombu_ivr_entries where ivr_id=%s and destination_id=%s", (ind,listeIVR[i],))
+				with open('%s.dot' % did, 'a') as schema:
+                                	schema.write("\"")
+					schema.write("IVR : ")
+					schema.write(str(nom.encode("utf-8")))
+					schema.write("\"")
+				if str(testivr) > "-1":
+                        		with open('%s.dot' % did, 'a') as schema:
+                                		schema.write("[label = \"")
+                                		schema.write(str(testivr))
+                                		schema.write("\"]")
+                        		testivr = -1
+				testivr = mycursor.fetchone()[0]
+                		with open('%s.dot' % did, 'a') as schema:
+                        		schema.write("edge [color=black]")
+                                	schema.write("\"")
+                                	schema.write("IVR : ")
+                                	schema.write(str(nom.encode("utf-8")))
+                                	schema.write("\" -- ")
+        			chemin(listeIVR[i])
+		else:
+			for x in range(len(listeDest)):
+				if listeDest[x] == dest:
+					with open('%s.dot' % did, 'a') as schema:
+                		                schema.write("\"")
+		                                schema.write("Annonce : ")
+                        		        schema.write(str(nom.encode("utf-8")))
+                        		        schema.write("\"")
+					with open('%s.dot' % did, 'a') as schema:
+						schema.write("edge [color=black]")
+                				schema.write("\"")
+						schema.write(str(nomType))
+                                                schema.write(": ")
+                                                schema.write(str(nom.encode("utf-8")))
+#                                		schema.write("\" -- \"")
+#						schema.write(str(listeDest[x+1]))
+                                		schema.write("\"")
 	elif name == 'nightmode':
 		mycursor.execute("select enabled_destination_id from ombu_nightmodes where nightmode_id=%s", (ind,))
 		dest = mycursor.fetchone()[0]
