@@ -39,7 +39,7 @@ def chemin(dest):
 				schema.write("Annonce : ")
 				schema.write(str(nom.encode("utf-8")))
 				schema.write("\"")
-			if str(testivr) > "-1":
+			if str(testivr) != "-1":
                                 with codecs.open('%s.dot' % did, 'a') as schema:
                                         schema.write("[label = \"")
                                         schema.write(str(testivr))
@@ -60,7 +60,7 @@ def chemin(dest):
 		                                schema.write("Annonce : ")
                         		        schema.write(str(nom.encode("utf-8")))
                         		        schema.write("\"")
-                        	if str(testivr) > "-1":
+                        	if str(testivr) != "-1":
                                 	with open('%s.dot' % did, 'a') as schema:
                                         	schema.write("[label = \"")
                                         	schema.write(str(testivr))
@@ -112,7 +112,7 @@ def chemin(dest):
                                         	schema.write("\n")
 			with open('%s.dot' % did, 'a') as schema:
                                 schema.write("\"")
-			if str(testivr) > "-1":
+			if str(testivr) != "-1":
                                 with open('%s.dot' % did, 'a') as schema:
                                         schema.write("[label = \"")
                                         schema.write(str(testivr))
@@ -179,7 +179,7 @@ def chemin(dest):
 #                                				schema.write(listeDest[x+1])
 					with open('%s.dot' % did, 'a') as schema:
                              			schema.write("\"")
-					if str(testivr) > "-1":
+					if str(testivr) != "-1":
                                 		with open('%s.dot' % did, 'a') as schema:
                                         		schema.write("[label = \"")
                                         		schema.write(str(testivr))
@@ -196,7 +196,7 @@ def chemin(dest):
 			schema.write("Extension : ")
 			schema.write(str(nom.encode("utf-8")))
                         schema.write("\"")
-		if str(testivr) > "-1":
+		if str(testivr) != "-1":
                                 with open('%s.dot' % did, 'a') as schema:
                                         schema.write("[label = \"")
                                         schema.write(str(testivr))
@@ -239,7 +239,7 @@ def chemin(dest):
                                                 schema.write("\n")
 			with open('%s.dot' % did, 'a') as schema:
                                         schema.write("\"")
-			if str(testivr) > "-1":
+			if str(testivr) != "-1":
                                 with open('%s.dot' % did, 'a') as schema:
                                         schema.write("[label = \"")
                                         schema.write(str(testivr))
@@ -304,7 +304,7 @@ def chemin(dest):
                                                 		schema.write("\n")
                                 	with open('%s.dot' % did, 'a') as schema:	
 						schema.write("\"")
-					if str(testivr) > "-1":
+					if str(testivr) != "-1":
                                 		with open('%s.dot' % did, 'a') as schema:
                                         		schema.write("[label = \"")
                                         		schema.write(str(testivr))
@@ -321,7 +321,7 @@ def chemin(dest):
 			schema.write("Trunk : ")
 			schema.write(str(dest.encode("utf-8")))
                         schema.write("\"")
-		if str(testivr) > "-1":
+		if str(testivr) != "-1":
                 	with open('%s.dot' % did, 'a') as schema:
                         	schema.write("[label = \"")
                                 schema.write(str(testivr))
@@ -339,7 +339,7 @@ def chemin(dest):
 				schema.write("DISA : ")
 				schema.write(str(dest.encode("utf-8")))
                                 schema.write("\"")
-		if str(testivr) > "-1":
+		if str(testivr) != "-1":
                         with open('%s.dot' % did, 'a') as schema:
                                 schema.write("[label = \"")
                                 schema.write(str(testivr))
@@ -351,6 +351,7 @@ def chemin(dest):
 	elif name == 'ivr':
 		mycursor.execute("select description from ombu_ivrs where ivr_id=%s", (ind,))
 		nom = mycursor.fetchone()[0]
+		nomType = "IVR : "
 #                print nom
 		mycursor.execute("select destination_id from ombu_ivr_entries where ivr_id=%s", (ind,))
 		listeIVR = []
@@ -358,27 +359,55 @@ def chemin(dest):
 			dest = x[0]
 #                	print dest
 			listeIVR.append(dest)
-		for i in range(len(listeIVR)):
-			mycursor.execute("select ivr_entry_id from ombu_ivr_entries where ivr_id=%s and destination_id=%s", (ind,listeIVR[i],))
-			with open('%s.dot' % did, 'a') as schema:
-                                schema.write("\"")
-				schema.write("IVR : ")
-				schema.write(str(nom.encode("utf-8")))
-				schema.write("\"")
-			if str(testivr) > "-1":
-                        	with open('%s.dot' % did, 'a') as schema:
-                                	schema.write("[label = \"")
-                                	schema.write(str(testivr))
-                                	schema.write("\"]")
-                        	testivr = -1
-			testivr = mycursor.fetchone()[0]
-                	with open('%s.dot' % did, 'a') as schema:
-                        	schema.write("edge [color=black]")
-                                schema.write("\"")
-                                schema.write("IVR : ")
-                                schema.write(str(nom.encode("utf-8")))
-                                schema.write("\" -- ")
-        		chemin(listeIVR[i])
+		listeDest.append(nomType + nom)
+                if dest not in listeDest :
+			listeDest.append(dest)
+			for i in range(len(listeIVR)):
+				mycursor.execute("select option from ombu_ivr_entries where ivr_id=%s and destination_id=%s", (ind,listeIVR[i],))
+				with open('%s.dot' % did, 'a') as schema:
+                	                schema.write("\"")
+					schema.write("IVR : ")
+					schema.write(str(nom))
+					schema.write("\"")
+				if str(testivr) != "-1":
+                	        	with open('%s.dot' % did, 'a') as schema:
+                	                	schema.write("[label = \"")
+                	                	schema.write(str(testivr))
+                	                	schema.write("\"]")
+                	        	testivr = -1
+				testivr = mycursor.fetchone()[0]
+                		with open('%s.dot' % did, 'a') as schema:
+                	        	schema.write("edge [color=black]")
+                	                schema.write("\"")
+                	                schema.write("IVR : ")
+                	                schema.write(str(nom.encode("utf-8")))
+                	                schema.write("\" -- ")
+        			chemin(listeIVR[i])
+		else :
+			for x in range(len(listeDest)):
+                                if listeDest[x] == dest:
+                                        with open('%s.dot' % did, 'a') as schema:
+                                                schema.write("\"")
+                                                schema.write("IVR : ")
+                                                schema.write(str(nom.encode("utf-8")))
+                                                schema.write("\"")
+					if str(testivr) != "-1":
+                                                with open('%s.dot' % did, 'a') as schema:
+                                                        schema.write("[label = \"")
+                                                        schema.write(str(testivr))
+                                                        schema.write("\"]")
+                                                testivr = -1
+					with open('%s.dot' % did, 'a') as schema:
+                                                schema.write("edge [color=black]")
+                                                schema.write("\"")
+                                                schema.write("IVR ")
+                                                schema.write(": ")
+                                                schema.write(str(nom.encode("utf-8")))
+#                                               schema.write("\" -- \"")
+#                                               schema.write(str(listeDest[x+1]))
+                                                schema.write("\"")
+
+			
 	elif name == 'nightmode':
 		mycursor.execute("select enabled_destination_id from ombu_nightmodes where nightmode_id=%s", (ind,))
 		dest = mycursor.fetchone()[0]
@@ -394,7 +423,7 @@ def chemin(dest):
 				schema.write("NM : ")
 				schema.write(str(nom.encode("utf-8")))
 				schema.write("\"")
-			if str(testivr) > "-1":
+			if str(testivr) != "-1":
 				with open('%s.dot' % did, 'a') as schema:
                                 	schema.write("[label = \"")
 					schema.write(str(testivr))
@@ -432,7 +461,7 @@ def chemin(dest):
 #						schema.write("\" -- \"")
 #                                		schema.write(str(listeDest[x+1]))
                                 		schema.write("\"")
-					if str(testivr) > "-1":
+					if str(testivr) != "-1":
                                 		with open('%s.dot' % did, 'a') as schema:
                                         		schema.write("[label = \"")
                                         		schema.write(str(testivr))
@@ -504,7 +533,7 @@ def chemin(dest):
                                         schema.write("\n")
 			with open('%s.dot' % did, 'a') as schema:
                                 schema.write("\"")
-			if str(testivr) > "-1":
+			if str(testivr) != "-1":
 	                        with open('%s.dot' % did, 'a') as schema:
         	                        schema.write("[label = \"")
                 	                schema.write(str(testivr))
@@ -561,7 +590,7 @@ def chemin(dest):
                                         schema.write("\n")
 			with open('%s.dot' % did, 'a') as schema:
                                 schema.write("\"")
-			if str(testivr) > "-1":
+			if str(testivr) != "-1":
                                 with open('%s.dot' % did, 'a') as schema:
                                         schema.write("[label = \"")
                                         schema.write(str(testivr))
@@ -602,7 +631,7 @@ def chemin(dest):
                         schema.write("\"Terminate : ")
 			schema.write(str(did))
 			schema.write("\"")
-		if str(testivr) > "-1":
+		if str(testivr) != "-1":
                                 with open('%s.dot' % did, 'a') as schema:
                                         schema.write("[label = \"")
                                         schema.write(str(testivr))
