@@ -9,7 +9,8 @@ testivr = -1
 
 
 def chemin(dest):
-	print dest
+#	print dest
+#	print listeDest
 	global testivr
 #	print str(testivr)
 	mycursor.execute("select category_id from ombu_destinations where destination_id=%s", (dest,))
