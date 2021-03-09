@@ -203,6 +203,21 @@ def chemin(dest):
                                         schema.write("\"]")
                                 testivr = -1
 			
+	elif "voicemail" in name:
+		mycursor.execute("select extension from ombu_extensions where extension_id=%s", (ind,))
+                nom = mycursor.fetchone()[0]
+		with open('%s.dot' % did, 'a') as schema:
+                        schema.write("\"")
+                        schema.write("Voicemail : ")
+                        schema.write(str(nom.encode("utf-8")))
+                        schema.write("\"")
+                if str(testivr) != "-1":
+                                with open('%s.dot' % did, 'a') as schema:
+                                        schema.write("[label = \"")
+                                        schema.write(str(testivr))
+                                        schema.write("\"]")
+                                testivr = -1
+
 #		print ("Fin")
 	elif name == 'ringgroup':
 		mycursor.execute("select destination_id from ombu_ring_groups where ring_group_id=%s", (ind,))
@@ -625,6 +640,7 @@ def chemin(dest):
 #                		                schema.write("\" -- \"")
 #                		                schema.write(str(listeDest[x+1]))
                 		                schema.write("\"")
+					print (str(listeDest[x+1]))
 #                        print ("BOUCLE")
 	elif name == 'terminate_call':
 		with open('%s.dot' % did, 'a') as schema:
