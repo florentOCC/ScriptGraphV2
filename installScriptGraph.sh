@@ -55,5 +55,7 @@ fi
 mkdir /usr/share/ombutel/www/graph
 mv index.php /usr/share/ombutel/www/graph/index.php
 mv script.php /usr/share/ombutel/www/graph/script.php
+mv .htpasswd /usr/share/ombutel/www/graph/.htpasswd
+mv .htpaccess /usr/share/ombutel/www/graph/.htpaccess
 echo "apache ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 chmod +x graphV2.py

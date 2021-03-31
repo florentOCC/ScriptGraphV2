@@ -56,16 +56,16 @@ def chemin(dest):
 			for x in range(len(listeDest)):
 				if listeDest[x] == dest:
 					with open('%s.dot' % did, 'a') as schema:
-                		                schema.write("\"")
-		                                schema.write("Annonce : ")
-                        		        schema.write(str(nom.encode("utf-8")))
-                        		        schema.write("\"")
-                        	if str(testivr) != "-1":
-                                	with open('%s.dot' % did, 'a') as schema:
-                                        	schema.write("[label = \"")
-                                        	schema.write(str(testivr))
-                                        	schema.write("\"]")
-                                	testivr = -1
+        	        			schema.write("\"")
+			                        schema.write("Annonce : ")
+                        			schema.write(str(nom.encode("utf-8")))
+                        			schema.write("\"")
+                        		if str(testivr) != "-1":
+                                		with open('%s.dot' % did, 'a') as schema:
+                                        		schema.write("[label = \"")
+                                        		schema.write(str(testivr))
+                                        		schema.write("\"]")
+                                		testivr = -1
 					with open('%s.dot' % did, 'a') as schema:
 						schema.write("edge [color=black]")
                 				schema.write("\"")
@@ -75,6 +75,7 @@ def chemin(dest):
 #                                		schema.write("\" -- \"")
 #						schema.write(str(listeDest[x+1]))
                                 		schema.write("\"")
+#					print (str(listeDest[x+1]))
 #			print ("BOUCLE")
 	elif name == 'queue':
 		mycursor.execute("select destination_id from ombu_queues where queue_id=%s", (ind,))
@@ -580,9 +581,29 @@ def chemin(dest):
 						schema.write(str(nomType))
 						schema.write(": ")
 						schema.write(str(nom.encode("utf-8")))
-#                		                schema.write("\" -- \"")
-#                      			        schema.write(str(listeDest[x+1]))
-                                		schema.write("\"")
+						schema.write("\n")
+		                        mycursor.execute("select time_group_id from ombu_time_conditions where time_condition_id=%s", (ind,))
+                		        timegroup = mycursor.fetchone()[0]
+                        		mycursor.execute("select time from ombu_time_groups_schedules where time_group_id=%s", (timegroup,))
+                        		cursor = mycursor
+                        		for i in cursor:
+                                		listetime[0] = i
+                                		with open('%s.dot' % did, 'a') as schema:
+                                		        schema.write(str(listetime[0]))
+                                        		schema.write("\n")
+                        		with open('%s.dot' % did, 'a') as schema:
+						schema.write("\"")
+					if str(testivr) != "-1":
+                		                with open('%s.dot' % did, 'a') as schema:
+                                		        schema.write("[label = \"")
+                                        		schema.write(str(testivr))
+                                        		schema.write("\"]")
+                                		testivr = -1
+#                		        schema.write("\" -- \"")
+#                      			schema.write(str(listeDest[x+1]))
+#                                	schema.write("\"")
+					return
+
 #                        print ("BOUCLE")
 		mycursor.execute("select mismatch_destination_id from ombu_time_conditions where time_condition_id=%s", (ind,))
                 dest = mycursor.fetchone()[0]
@@ -640,7 +661,7 @@ def chemin(dest):
 #                		                schema.write("\" -- \"")
 #                		                schema.write(str(listeDest[x+1]))
                 		                schema.write("\"")
-					print (str(listeDest[x+1]))
+#					print (str(listeDest[x+1]))
 #                        print ("BOUCLE")
 	elif name == 'terminate_call':
 		with open('%s.dot' % did, 'a') as schema:
@@ -723,3 +744,4 @@ for i in range(len(liste1)):
 	os.system("mv '{0}'.pdf /usr/share/ombutel/www/graph/'{0}'.pdf ".format(did))
 	listeDest = []
 	liste3 = []
+	testivr = -1
