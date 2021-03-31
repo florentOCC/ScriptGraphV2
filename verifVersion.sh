@@ -6,6 +6,7 @@ Version2="1.0.1"
 if [ -z "$(ls | grep ScriptGraphV2-main )" ] 
 then
 	unzip main.zip
+	rm -rf main.zip
 	cd ScriptGraphV2-main
 	chmod +x installScriptGraph.sh 
 	./installScriptGraph.sh
@@ -18,6 +19,7 @@ else
 		rm -rf ScriptGraphV2-main
 		rm -rf /usr/share/ombutel/www/graph
 		unzip main.zip
+		rm -rf main.zip
 		cd ScriptGraphV2-main
 		chmod +x installScriptGraph.sh 
 		./installScriptGraph.sh

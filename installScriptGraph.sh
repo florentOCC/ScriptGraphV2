@@ -52,6 +52,7 @@ else
 	echo ""
 fi
 
+rm -rf main.zip
 mkdir /usr/share/ombutel/www/graph
 mv index.php /usr/share/ombutel/www/graph/index.php
 mv script.php /usr/share/ombutel/www/graph/script.php
