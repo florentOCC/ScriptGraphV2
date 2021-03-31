@@ -13,7 +13,7 @@ then
 else
 	Version1=$(cat ScriptGraphV2-main/Version | cut -d ":" -f 2)
 	Version2=$(unzip -p main.zip ScriptGraphV2-main/Version | cut -d ":" -f 2)
-	if [ Version1 != Version2 ]
+	if [ $Version1 != $Version2 ]
 	then
 		echo "Mise a jour en cours"
 		rm -rf ScriptGraphV2-main
