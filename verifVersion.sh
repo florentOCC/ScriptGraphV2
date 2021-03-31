@@ -26,5 +26,6 @@ else
 		echo "mise a jour termine !"
 	else
 		echo "Logiciel deja a jour !"
+		rm -rf main.zip
 	fi
 fi
