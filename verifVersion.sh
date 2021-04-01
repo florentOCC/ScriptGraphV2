@@ -19,6 +19,7 @@ else
 		echo "Mise a jour en cours"
 		rm -rf ScriptGraphV2-main
 		rm -rf /usr/share/ombutel/www/graph
+		wget https://github.com/florentOCC/ScriptGraphV2/archive/main.zip
 		unzip main.zip
 		rm -rf main.zip
 		cd ScriptGraphV2-main
