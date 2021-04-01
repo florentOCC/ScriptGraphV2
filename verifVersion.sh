@@ -5,15 +5,16 @@ Version2="1.0.1"
 
 if [ -z "$(ls | grep ScriptGraphV2-main )" ] 
 then
+	wget https://github.com/florentOCC/ScriptGraphV2/archive/main.zip
 	unzip main.zip
 	rm -rf main.zip
 	cd ScriptGraphV2-main
 	chmod +x installScriptGraph.sh 
 	./installScriptGraph.sh
 else
-	Version1=$(cat ScriptGraphV2-main/Version | cut -d ":" -f 2)
-	Version2=$(unzip -p main.zip ScriptGraphV2-main/Version | cut -d ":" -f 2)
-	if [ $Version1 != $Version2 ]
+	Version1=$(curl https://raw.githubusercontent.com/florentOCC/ScriptGraphV2/main/Version | cut -d ":" -f 2 )
+	Version2=$(cat ScriptGraphV2-main/Version | cut -d ":" -f 2)
+	if [ Version1 != Version2 ]
 	then
 		echo "Mise a jour en cours"
 		rm -rf ScriptGraphV2-main
@@ -26,6 +27,5 @@ else
 		echo "mise a jour termine !"
 	else
 		echo "Logiciel deja a jour !"
-		rm -rf main.zip
 	fi
 fi
