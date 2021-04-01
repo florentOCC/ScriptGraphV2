@@ -718,7 +718,7 @@ for i in cursor:
 
 #print liste2[0]
 
-
+Date = subprocess.check_output("date", shell=True)
 os.system("mkdir /usr/share/ombutel/www/graph")
 
 for i in range(len(liste1)):
@@ -729,7 +729,12 @@ for i in range(len(liste1)):
 	with open('%s.dot' % did, 'w') as schema:
 		schema.write("graph schema {")
 	with open('%s.dot' % did, 'a') as schema:
+		schema.write(" \n ")
+		schema.write("node [shape=box]")
 	        schema.write(" \n \"")
+		schema.write(str(Date))
+		schema.write(" \n \"")
+		schema.write(" \n \"")
 		schema.write(str(did))
 		schema.write("\" -- ")
 	chemin(liste1[i])
