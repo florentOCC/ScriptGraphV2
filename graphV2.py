@@ -167,26 +167,26 @@ def chemin(dest):
 						liste3.append(extension)
 #                               		print liste3
 						for i in range (len(liste3)):
-						mycursor.execute("select extension from ombu_extensions where extension_id=%s", (liste3[i],))
-						extension = mycursor.fetchone()[0]
-#                               		print extension
-						with open('%s.dot' % did, 'a') as schema:
-							schema.write(str(extension))
-							schema.write(" ")
-						if (i+1)%5 == 0:
+							mycursor.execute("select extension from ombu_extensions where extension_id=%s", (liste3[i],))
+							extension = mycursor.fetchone()[0]
+#                               			print extension
 							with open('%s.dot' % did, 'a') as schema:
-								schema.write("\n")
-#                                				schema.write("\" -- \"")
-#                                				schema.write(listeDest[x+1])
-					with open('%s.dot' % did, 'a') as schema:
-						schema.write("\"")
-					if str(testivr) != "-1":
+								schema.write(str(extension))
+								schema.write(" ")
+							if (i+1)%5 == 0:
+								with open('%s.dot' % did, 'a') as schema:
+									schema.write("\n")
+#                                					schema.write("\" -- \"")
+#                                					schema.write(listeDest[x+1])
 						with open('%s.dot' % did, 'a') as schema:
-							schema.write("[label = \"")
-							schema.write(str(testivr))
-							schema.write("\"]")
-							schema.write("edge [color=black]")
-					testivr = -1
+							schema.write("\"")
+						if str(testivr) != "-1":
+							with open('%s.dot' % did, 'a') as schema:
+								schema.write("[label = \"")
+								schema.write(str(testivr))
+								schema.write("\"]")
+								schema.write("edge [color=black]")
+						testivr = -1
 					
 #                       	print ("BOUCLE")
 	elif name == 'extension':
