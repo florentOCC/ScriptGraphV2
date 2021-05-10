@@ -26,7 +26,7 @@ else
 	echo ""
 fi
 
-if [ -z "$(pip list | grep PyMySQL)" ]
+if [ -z "$(pip3 list | grep PyMySQL)" ]
 then
 	echo ""
 	echo "Installation connecteur Python-Mysql"
