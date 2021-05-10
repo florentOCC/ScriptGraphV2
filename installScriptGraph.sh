@@ -1,11 +1,11 @@
 #!/bin/bash
 
-if [ -z "$(ls /bin | grep python2)" ] 
+if [ -z "$(ls /bin | grep python3)" ] 
 then
 	echo ""
-	echo "Installation de Python"
+	echo "Installation de Python3"
 	echo ""
-	yum -y install python
+	yum -y install python3
 	echo ""
 else
 	echo ""
@@ -13,12 +13,12 @@ else
 	echo ""
 fi
 
-if [ -z "$(ls /bin | grep pip2)" ]
+if [ -z "$(ls /bin | grep pip3)" ]
 then
 	echo ""
 	echo "Installation de pip"
 	echo ""
-        yum -y install python2-pip
+        yum -y install python3-pip
 	echo ""	
 else
 	echo ""
@@ -26,12 +26,12 @@ else
 	echo ""
 fi
 
-if [ -z "$(pip list | grep mysql-connector)" ]
+if [ -z "$(pip list | grep PyMySQL)" ]
 then
 	echo ""
 	echo "Installation connecteur Python-Mysql"
         echo ""
-	pip install mysql-connector-python
+	pip3 install PyMySQL
 	echo ""
 else
 	echo ""
