@@ -1,6 +1,6 @@
 <?php
 #$output = shell_exec("sudo -u apache python /root/ScriptGraphV2-main/graphV2.py");
-#system("sudo -u apache python /root/ScriptGraphV2-main/graphV2.py");
+#system("sudo -u apache python3.6 /root/ScriptGraphV2-main/graphV2.py");
 #$output = shell_exec('echo yolo');
 #echo "<pre>$output</pre>";
 

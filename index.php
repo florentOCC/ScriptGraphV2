@@ -6,7 +6,16 @@
 <?php
 if ($dir = opendir(".")) {
   while($file = readdir($dir)) {
-    echo "<a href=\"./$file\">$file</a><br>\n";
+	  if ($file != "." || $file != ".." || $file != "script.php" || $file != "index.php")
+		{
+			if( strstr($file, "dot"))
+			{
+			}
+			else 
+			{
+			echo "<a href=\"./$file\">$file</a><br>\n";
+			}
+		}
   }
   closedir($dir);
 }
