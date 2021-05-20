@@ -5,7 +5,7 @@
 #echo "<pre>$output</pre>";
 
 
-$command = escapeshellcmd('sudo /root/ScriptGraphV2-main/graphV2.py');
+$command = escapeshellcmd('sudo python3.6 /root/ScriptGraphV2-main/graphV2.py');
 shell_exec($command);
 echo $output;
 echo '<p><a href="javascript:history.go(-1)" title="Return to previous page">&laquo; Go back</a></p>';
