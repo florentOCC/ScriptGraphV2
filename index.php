@@ -1,4 +1,4 @@
-html>
+<html>
 <body>
 <form action="script.php">
         <input type="submit" value="Graph">

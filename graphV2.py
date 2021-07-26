@@ -676,6 +676,22 @@ def chemin(dest):
 			testivr = -1
 		with open('%s.dot' % did, 'a') as schema:
 			schema.write("edge [color=black]")
+	elif name == 'custom_destination':
+		mycursor.execute("select destination from ombu_custom_destinations where custom_destination_id=%s", (ind,))
+		custDest = mycursor.fetchone()[0]
+		with open('%s.dot' % did, 'a') as schema:
+                        schema.write("\"Custom Dest : ")
+                        schema.write(str(custDest))
+                        schema.write("\"")
+		if str(testivr) != "-1":
+                        with open('%s.dot' % did, 'a') as schema:
+                                schema.write("[label = \"")
+                                schema.write(str(testivr))
+                                schema.write("\"]")
+                        testivr = -1
+		with open('%s.dot' % did, 'a') as schema:
+			schema.write("edge [color=black]")
+
 #		print("Fin")
 #	else:
 #		print("Fin")
